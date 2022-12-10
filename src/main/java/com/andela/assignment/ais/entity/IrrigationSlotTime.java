@@ -1,12 +1,14 @@
 package com.andela.assignment.ais.entity;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Table;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +18,8 @@ import lombok.ToString;
 
 @Schema(description = "Device Data")
 @Entity
-@Table(name = "irrigation_slot_times")
+@Table(name = "irrigation_slot_times", indexes = {
+		@Index(name = "i_irrigation_slot_times_period", columnList = "start_time,end_time") })
 @ToString
 @Getter
 @Setter
@@ -26,11 +29,11 @@ public class IrrigationSlotTime {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(name = "start_time", columnDefinition = "TIMESTAMP")
-	private LocalDateTime startTime;
+	@Column(name = "start_time", columnDefinition = "TIME")
+	private LocalTime startTime;
 
-	@Column(name = "end_time", columnDefinition = "TIMESTAMP")
-	private LocalDateTime endTime;
+	@Column(name = "end_time", columnDefinition = "TIME")
+	private LocalTime endTime;
 
 	// water_amount
 	@Column(name = "water_quantity", columnDefinition = "DECIMAL(10, 2) default 1")

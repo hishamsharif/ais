@@ -1,6 +1,8 @@
 package com.andela.assignment.ais.usecase.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.context.annotation.Primary;
@@ -28,16 +30,16 @@ public class IrrigationSchedulerServiceDefault implements IrrigationSchedulerSer
 	}
 
 	@Override
-	public List<IrrigationSchedule> getCompletedIrrigationSchedules(LocalDateTime currenExecutionTime) {
+	public List<IrrigationSchedule> getCompletedIrrigationSchedules(LocalTime currenExecutionTime, LocalDate  currentExecutedDate) {
 		log.info("Finding all slottimes currently being pumped and ends before " + currenExecutionTime);
-		return this.getIrrigationScheduleRepo().findAllBySlotTimeEndBefore(currenExecutionTime);
+		return this.getIrrigationScheduleRepo().findAllBySlotTimeEndBefore(currenExecutionTime,currentExecutedDate);
 	}
 
 	@Override
-	public List<IrrigationSchedule> getNextIrrigationSchedules(LocalDateTime lastExecutedTime,
-			LocalDateTime nextExecutedTime) {
+	public List<IrrigationSchedule> getNextIrrigationSchedules(LocalTime lastExecutedTime,
+			LocalTime nextExecutedTime, LocalDate currentExecutedDate) {
 		log.info("Finding all slottimes falls between " + lastExecutedTime + " and " + nextExecutedTime);
-		return this.getIrrigationScheduleRepo().findAllBySlotTimeBetween(lastExecutedTime, nextExecutedTime);
+		return this.getIrrigationScheduleRepo().findAllBySlotTimeBetween(lastExecutedTime, nextExecutedTime,currentExecutedDate);
 	}
 
 }

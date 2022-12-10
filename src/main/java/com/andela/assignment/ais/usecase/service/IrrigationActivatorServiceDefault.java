@@ -1,7 +1,9 @@
 
 package com.andela.assignment.ais.usecase.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.function.Consumer;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -20,12 +22,16 @@ public class IrrigationActivatorServiceDefault implements IrrigationActivatorSer
 
 	final private MqttTemplate mqttTemplate;
 	final private IrrigationSchedulerService irrigationSchedulerService;
-	private LocalDateTime lastExecutedTime;
+	private LocalDate lastExecutedDate;
+	private LocalTime lastExecutedTime;
 
 	public IrrigationActivatorServiceDefault(MqttTemplate mqttTemplate,
 			IrrigationSchedulerService irrigationSchedulerService) {
 		this.mqttTemplate = mqttTemplate;
 		this.irrigationSchedulerService = irrigationSchedulerService;
+		this.lastExecutedDate = LocalDate.now();
+		this.lastExecutedTime  = LocalTime.now();
+		
 	}
 
 	public MqttTemplate getMqttTemplate() {
@@ -36,20 +42,29 @@ public class IrrigationActivatorServiceDefault implements IrrigationActivatorSer
 		return irrigationSchedulerService;
 	}
 
-	public LocalDateTime getLastExecutedTime() {
+	public LocalTime getLastExecutedTime() {
 		return lastExecutedTime;
 	}
 
-	public void setLastExecutedTime(LocalDateTime lastExecutedTime) {
+	public void setLastExecutedTime(LocalTime lastExecutedTime) {
 		this.lastExecutedTime = lastExecutedTime;
+	}
+
+	public LocalDate getLastExecutedDate() {
+		return lastExecutedDate;
+	}
+
+	public void setLastExecutedDate(LocalDate lastExecutedDate) {
+		this.lastExecutedDate = lastExecutedDate;
 	}
 
 	@Scheduled(cron = "${irrigation.pumping.interval.cron}")
 	public void pumpWater() throws InterruptedException, MqttException {
 		log.info("pumping water called at " + LocalDateTime.now());
 
-		// this.getLastExecutedTime()
-		LocalDateTime currentExecutedTime = LocalDateTime.now();
+		LocalDate currentExecutedDate = LocalDate.now();
+		LocalTime currentExecutedTime  = LocalTime.now();
+		 
 
 		// retrieve all schedules between last and current execution times, notify
 		// relevant IoT activator to pump water via Mqtt middleware
@@ -61,7 +76,7 @@ public class IrrigationActivatorServiceDefault implements IrrigationActivatorSer
 				log.info(e1.toString());
 			}
 		};
-		this.getIrrigationSchedulerService().getNextIrrigationSchedules(this.getLastExecutedTime(), currentExecutedTime)
+		this.getIrrigationSchedulerService().getNextIrrigationSchedules(this.getLastExecutedTime(), currentExecutedTime, currentExecutedDate)
 				.forEach(activatorOn);
 
 		// retrieve all schedules that need to be ended by now, filter by status of
@@ -73,8 +88,9 @@ public class IrrigationActivatorServiceDefault implements IrrigationActivatorSer
 				log.info(e1.toString());
 			}
 		};
-		this.getIrrigationSchedulerService().getCompletedIrrigationSchedules(currentExecutedTime).forEach(activatorOff);
+		this.getIrrigationSchedulerService().getCompletedIrrigationSchedules(currentExecutedTime,currentExecutedDate).forEach(activatorOff);
 
+		this.setLastExecutedDate(currentExecutedDate);
 		this.setLastExecutedTime(currentExecutedTime);
 
 		Thread.sleep(5000);

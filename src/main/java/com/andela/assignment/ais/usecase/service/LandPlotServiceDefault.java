@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.andela.assignment.ais.adaptor.gateway.db.LandPlotRepo;
 import com.andela.assignment.ais.entity.LandPlot;
@@ -30,6 +31,7 @@ public class LandPlotServiceDefault implements LandPlotService {
 	}
 
 	@Override
+	@Transactional
 	public LandPlotWithIdDTO addLandPlot(LandPlotDTO plot) throws LandPlotNotCapturedException {
 		// add any pre-conditions ...
 
@@ -44,6 +46,7 @@ public class LandPlotServiceDefault implements LandPlotService {
 	}
 
 	@Override
+	@Transactional
 	public LandPlotWithIdDTO editLandPlot(LandPlotDTO plot, long landPlotId) throws LandPlotNotFoundException {
 
 		// convert the dto to entity , and update if found or insert via repo
@@ -58,6 +61,7 @@ public class LandPlotServiceDefault implements LandPlotService {
 	}
 
 	@Override
+	@Transactional
 	public LandPlotWithIrrigationSchedulesDTO configureLandPlot(IrrigationScheduleDTO config, long landPlotId)
 			throws LandPlotNotFoundException {
 		// TODO Auto-generated method stub

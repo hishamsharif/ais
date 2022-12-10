@@ -4,7 +4,7 @@ Automatic Irrigation System for efficient watering cultivation lands
 Demonstrates a solution to efficiently manage the irrigation of cultivation lands, use an api to configure land plots and their irrigation schedules, and additionally overrides the configuration via sensing the soil moisture and water levels.
 
 
-The system comprises of below containers/application :
+The system comprises of below containers/components :
 * The edge service - that will have the core implementation of the above solution, designed following a best practice from 'clean-architecture',  which interacts with external via gateways for Database (MySQL) and MQTT Middleware (Eclipse Mosquitto) , also expose a Rest API to manage the land plot resource and configure its irrigation schedules.
 
 > Containing services/modules :
@@ -21,6 +21,7 @@ The system comprises of below containers/application :
 * The Web application - will provide the UI to maintain the land plots and consume the Rest API provided by the edge service
 
 * MySQL database - for persisting the land plot configurations and collected soil sensor data  
+>  The 
 
 * Eclipse Mosquitto (implements MQTT protocol) - event-driven, light weight messaging between the edge service and the IoT devices  
 
@@ -47,9 +48,10 @@ The system comprises of below containers/application :
 >  -  mvn clean package   
    *(Note: the built artifact 'automatic-irrigation-system'.jar, will be found in location ./target/ ) *  
    
-** Execute the following SQL script in MySQL to create the required DB and Tables :**   
->  -   [Create Database](./scripts/schema.sql)    
+** Execute the following SQL script in MySQL to create the required DB schema and user  :**   
+>  -   [Create Database](./scripts/db_mysql.sql)    
 	*(Note: change user/password as required, and if changed, consider updating the following application launch command too)*
+	***Flyway migration tool is integrated for database schema ddl and dml migration, and version control. ***
 
 ** Start the application with below command :   **  
 >  -  java -jar ./target/automatic-irrigation-system.jar --server.port=8080 --mysql.host=localhost --mysql.port=3306 --mysql.database=ais --mysql.username=aisapp --mysql.password=123    

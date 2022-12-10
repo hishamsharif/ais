@@ -1,6 +1,7 @@
 package com.andela.assignment.ais.usecase.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -25,16 +26,21 @@ public class IrrigationSchedulerServiceWithSensorOverride implements IrrigationS
 	}
 
 	@Override
-	public List<IrrigationSchedule> getCompletedIrrigationSchedules(LocalDateTime currenExecutionTime) {
-		log.info("To be implemented later");
+	public List<IrrigationSchedule> getCompletedIrrigationSchedules(LocalTime currenExecutionTime,
+			LocalDate currentExecutedDate) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<IrrigationSchedule> getNextIrrigationSchedules(LocalDateTime lastExecutedTime,
-			LocalDateTime nextExecutedTime) {
-		log.info("To be implemented later");
+	public List<IrrigationSchedule> getNextIrrigationSchedules(LocalTime lastExecutedTime, LocalTime nextExecutedTime,
+			LocalDate currentExecutedDate) {
+		// TODO Auto-generated method stub
 		return null;
 	}
+
+	 
+
+	 
 
 }
