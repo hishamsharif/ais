@@ -3,10 +3,9 @@ package com.andela.assignment.ais.usecase.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.andela.assignment.ais.adaptor.gateway.repository.LandPlotRepo;
+import com.andela.assignment.ais.adaptor.gateway.db.LandPlotRepo;
 import com.andela.assignment.ais.entity.LandPlot;
 import com.andela.assignment.ais.usecase.model.IrrigationScheduleDTO;
 import com.andela.assignment.ais.usecase.model.LandPlotDTO;

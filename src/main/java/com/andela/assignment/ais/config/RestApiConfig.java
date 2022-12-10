@@ -14,8 +14,8 @@ public class RestApiConfig {
 
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/**")
-						// .allowedOrigins("http://localhost:9001")
+				registry.addMapping("/api/**").allowedOrigins("*")
+						// .allowedOrigins("http://localhost:8080")
 						// .allowedMethods("*", "GET","POST","PUT", "DELETE")
 						// .allowCredentials(false)
 						.maxAge(3600);

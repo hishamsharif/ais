@@ -1,4 +1,4 @@
-package com.andela.assignment.ais.adaptor.gateway.repository;
+package com.andela.assignment.ais.adaptor.gateway.db;
 
 import java.util.List;
 

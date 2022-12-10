@@ -9,13 +9,14 @@ The system comprises of below containers/application :
 
 > Containing services/modules :
 > 1.  Entity - Implements the core business rules  
-> 2.  UseCases - Services that implements user stories, also contains models/DTO that are transferred across boundaries
+> 2.  UseCases - Services that implements user stories, also contains models/DTO that are transferred across boundaries    
+>     - LandPlotService - abstract the main UseCase,  provide default implementation using LandPlotServiceDefault, and use Spring transaction management for database writes.    
 > 3.  Interface Adaptors - Services expose or consume external services/applications      
->     - Cross-cutting concerns like transactions and exceptions are handled using inbuilt Spring AOP Advice
- 
-
- 
-		
+>     - LandPlotRestApi - expose rest api to update/configure land plots   
+>     - LandPlotRepo - Spring Data Integration with JPA/Hibernate, CRUD functionality against the data source using Spring Repository pattern
+>     - LandPlotApiExceptionHandler - Cross-cutting concerns like transactions and exceptions are handled using inbuilt Spring AOP  
+  
+  
 
 * The Web application - will provide the UI to maintain the land plots and consume the Rest API provided by the edge service
 
@@ -29,13 +30,7 @@ The system comprises of below containers/application :
 
 ### ERD diagram of irrigation system  
 ![Entity Relationship Diagram](./docs/irrigation-system-ERD.jpg)
-  
-   
-Cross-cutting concerns like transactions and exceptions are handled using inbuilt Spring AOP Advice Exception mapping from application exceptions to the right HTTP response with exception details in the body
-Spring Data Integration with JPA/Hibernate with just a few lines of configuration and familiar annotations.
-Automatic CRUD functionality against the data source using Spring Repository pattern
-Demonstrates MockMVC test framework with associated libraries
-All APIs are "self-documented" by Swagger2 using annotations
+ 
 
 
 ## Pre-requesites :
@@ -49,16 +44,20 @@ All APIs are "self-documented" by Swagger2 using annotations
 ## Setup a runtime env. for the application:
 
 ** Clone this repository and build the application using :**  
->> -  mvn clean package   
-   (Note: the built artifact 'automatic-irrigation-system'.jar, will be found in location ./target/ )
+>  -  mvn clean package   
+   *(Note: the built artifact 'automatic-irrigation-system'.jar, will be found in location ./target/ ) *  
+   
+** Execute the following SQL script in MySQL to create the required DB and Tables :**   
+>  -   [Create Database](./scripts/schema.sql)    
+	*(Note: change user/password as required, and if changed, consider updating the following application launch command too)*
 
 ** Start the application with below command :   **  
->> -  java -jar ./target/automatic-irrigation-system.jar --server.port=8080 --mysql.host=localhost --mysql.port=3306 --mysql.database=ais --mysql.username=aisapp --mysql.password=123    
-   (Note: the sensitive or environment specific configuration parameters are overridden with CLI options to above java command ) 
+>  -  java -jar ./target/automatic-irrigation-system.jar --server.port=8080 --mysql.host=localhost --mysql.port=3306 --mysql.database=ais --mysql.username=aisapp --mysql.password=123    
+   *(Note: the sensitive or environment specific configuration parameters are overridden with CLI options to above java command, ensure the database user/password given here is correct as per previous creation script )* 
    
 ** TODO: Optionally run within a docker container : **
->> -  docker build -t andela/ais .
->> -  docker run -p 8080:8080 andela/ais
+>  -  docker build -t andela/ais .
+>  -  docker run -p 8080:8080 andela/ais
 	
 
 ## Access the API document

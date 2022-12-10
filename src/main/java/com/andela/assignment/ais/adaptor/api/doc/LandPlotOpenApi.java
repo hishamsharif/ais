@@ -68,7 +68,7 @@ public interface LandPlotOpenApi {
 			"landplot" })
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = LandPlotWithIdDTO.class)))) })
-	@GetMapping(value = "/", consumes = { "application/json" })
+	@GetMapping(value = "/", produces = { "application/json" })
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<LandPlotWithIdDTO>> listAllLandPlotsaAndDetails(
 
@@ -81,7 +81,7 @@ public interface LandPlotOpenApi {
 			@ApiResponse(responseCode = "200", description = "successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = LandPlotWithIdDTO.class))),
 			@ApiResponse(responseCode = "400", description = "Invalid land plot ref supplied", content = @Content),
 			@ApiResponse(responseCode = "404", description = "land plot not found", content = @Content) })
-	@GetMapping(value = "/{landPlotId}", consumes = { "application/json" })
+	@GetMapping(value = "/{landPlotId}", produces = { "application/json" })
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<LandPlotWithIdDTO> findLandPlotById(
 

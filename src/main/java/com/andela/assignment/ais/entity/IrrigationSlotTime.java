@@ -37,6 +37,10 @@ public class IrrigationSlotTime {
 	// @Column(name = "water_quantity")
 	double waterQuantity;
 
+	// value
+	@Column(name = "is_pumping", columnDefinition = "boolean default false")
+	Boolean isPumping; // false=No, true=Ongoing
+
 	// in minutes
 	// @Column(name = "duration", columnDefinition = "integer default 15")
 	// long duration; // = ChronoUnit.MINUTES.between(startTime, endTime);
