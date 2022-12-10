@@ -24,8 +24,11 @@ The system comprises of below containers/application :
 * Eclipse Mosquitto (implements MQTT protocol) - event-driven, light weight messaging between the edge service and the IoT devices  
 
 ### The High level architecture diagram
-![image info](./docs/Irrigation-System-Architecture.jpg)
+![System Architecture](./docs/Irrigation-System-Architecture.jpg)
 
+
+### ERD diagram of irrigation system  
+![Entity Relationship Diagram](./docs/irrigation-system-ERD.jpg)
   
    
 Cross-cutting concerns like transactions and exceptions are handled using inbuilt Spring AOP Advice Exception mapping from application exceptions to the right HTTP response with exception details in the body
