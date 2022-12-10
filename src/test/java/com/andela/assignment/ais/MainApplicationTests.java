@@ -1,10 +1,10 @@
-package com.andela.assignment.automaticirrigationsystem;
+package com.andela.assignment.ais;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AutomaticIrrigationSystemApplicationTests {
+class MainApplicationTests {
 
 	@Test
 	void contextLoads() {
