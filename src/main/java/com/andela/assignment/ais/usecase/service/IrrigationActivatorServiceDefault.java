@@ -75,6 +75,7 @@ public class IrrigationActivatorServiceDefault implements IrrigationActivatorSer
 			} catch (MqttException e1) {
 				log.info(e1.toString());
 			}
+			this.getIrrigationSchedulerService().updateSlotStatus(t,true);
 		};
 		this.getIrrigationSchedulerService().getNextIrrigationSchedules(this.getLastExecutedTime(), currentExecutedTime, currentExecutedDate)
 				.forEach(activatorOn);
@@ -83,10 +84,13 @@ public class IrrigationActivatorServiceDefault implements IrrigationActivatorSer
 		// pumping is ongoing, and notify relevant IoT activator to stop pumping water
 		Consumer<IrrigationSchedule> activatorOff = t -> {
 			try {
-				notifyActivator(t, "OFF");
+				notifyActivator(t, "OFF"); 
 			} catch (MqttException e1) {
 				log.info(e1.toString());
 			}
+			
+			this.getIrrigationSchedulerService().updateSlotStatus(t,false);
+			
 		};
 		this.getIrrigationSchedulerService().getCompletedIrrigationSchedules(currentExecutedTime,currentExecutedDate).forEach(activatorOff);
 

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.andela.assignment.ais.adaptor.gateway.db.IrrigationScheduleRepo;
+import com.andela.assignment.ais.adaptor.gateway.db.IrrigationSlotTimeRepo;
 import com.andela.assignment.ais.entity.IrrigationSchedule;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +20,20 @@ import lombok.extern.slf4j.Slf4j;
 public class IrrigationSchedulerServiceDefault implements IrrigationSchedulerService {
 
 	final private IrrigationScheduleRepo irrigationScheduleRepo;
+	final private IrrigationSlotTimeRepo irrigationSlotTimeRepo ;
 
-	public IrrigationSchedulerServiceDefault(IrrigationScheduleRepo irrigationScheduleRepo) {
+	public IrrigationSchedulerServiceDefault(IrrigationScheduleRepo irrigationScheduleRepo, IrrigationSlotTimeRepo irrigationSlotTimeRepo) {
 		this.irrigationScheduleRepo = irrigationScheduleRepo;
+		this.irrigationSlotTimeRepo = irrigationSlotTimeRepo ;
 
 	}
 
 	public IrrigationScheduleRepo getIrrigationScheduleRepo() {
 		return irrigationScheduleRepo;
+	}
+
+	public IrrigationSlotTimeRepo getIrrigationSlotTimeRepo() {
+		return irrigationSlotTimeRepo;
 	}
 
 	@Override
@@ -40,6 +47,11 @@ public class IrrigationSchedulerServiceDefault implements IrrigationSchedulerSer
 			LocalTime nextExecutedTime, LocalDate currentExecutedDate) {
 		log.info("Finding all slottimes falls between " + lastExecutedTime + " and " + nextExecutedTime);
 		return this.getIrrigationScheduleRepo().findAllBySlotTimeBetween(lastExecutedTime, nextExecutedTime,currentExecutedDate);
+	}
+
+	@Override
+	public void updateSlotStatus(IrrigationSchedule t, boolean b) { 
+		 t.getSlotTimes().forEach(slot -> this.getIrrigationSlotTimeRepo().updateSlotPumpingStatus(b, slot.getId()) );
 	}
 
 }

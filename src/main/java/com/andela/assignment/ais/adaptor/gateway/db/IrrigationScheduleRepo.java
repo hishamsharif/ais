@@ -21,4 +21,7 @@ public interface IrrigationScheduleRepo extends JpaRepository<IrrigationSchedule
 	@Query("from IrrigationSchedule s left join s.slotTimes i where s.toDate <=  :currentExecutedDate  or i.endTime <= :slotTimeEnd and  i.isPumping = true  ")
 	List<IrrigationSchedule> findAllBySlotTimeEndBefore(@Param("slotTimeEnd") LocalTime slotTimeEnd, @Param("currentExecutedDate")  LocalDate currentExecutedDate);
 
+	
+	
+ 
 }

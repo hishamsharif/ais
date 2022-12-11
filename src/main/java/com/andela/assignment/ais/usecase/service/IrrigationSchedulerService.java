@@ -17,4 +17,6 @@ public interface IrrigationSchedulerService {
 	// if lastExecutedTime is empty, find all slots for current day
 	public List<IrrigationSchedule> getNextIrrigationSchedules(LocalTime lastExecutedTime,
 			LocalTime nextExecutedTime, LocalDate currentExecutedDate);
+
+	public void updateSlotStatus(IrrigationSchedule t, boolean b);
 }

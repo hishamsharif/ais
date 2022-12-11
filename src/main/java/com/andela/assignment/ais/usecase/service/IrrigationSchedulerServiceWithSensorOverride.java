@@ -39,6 +39,12 @@ public class IrrigationSchedulerServiceWithSensorOverride implements IrrigationS
 		return null;
 	}
 
+	@Override
+	public void updateSlotStatus(IrrigationSchedule t, boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	 
 
 	 
